@@ -1,75 +1,75 @@
 package com.al.lab2;
+
 import java.util.Scanner;
 import java.math.BigDecimal;
 
-//Armand Lagman
+// Armand Lagman
 
 public class MainDriver {
-	
+
 	public static void main(String[] args) {
-		
-		// Creates Scanner to get input from the user
-		Scanner input = new Scanner(System.in);
 
-		// Stores 5 Interest objects
-		Interest[] interests = new Interest[5];
+		// Creates Scanner to read input from the user
+		Scanner scanner = new Scanner(System.in);
 
-		// Repeats the input and calculations for 5 objects
-		for (int i = 0; i < 5; i++) {
+		// Creates an array that can store 5 Interest objects
+		Interest[] investments = new Interest[5];
 
-			System.out.println("\n--- Interest Object " + (i + 1) + " ---");
+		// Repeats the input process for all 5 investments
+		for (int i = 0; i < investments.length; i++) {
 
-			// Asks the user to enter the principal amount
-			System.out.print("Enter principal amount: ");
+			System.out.println("\nInvestment " + (i + 1));
 
-			if (!input.hasNextBigDecimal()) {
-				System.out.println("Error: Principal must be a number.");
-				return;
-			}
+			// Gets the principal amount from the user
+			System.out.print("Enter Principal: ");
+			BigDecimal principal = scanner.nextBigDecimal();
 
-			BigDecimal principal = input.nextBigDecimal();
+			// Gets the interest rate from the user
+			System.out.print("Enter Interest Rate (%): ");
+			BigDecimal rate = scanner.nextBigDecimal();
 
-			// Asks the user to enter the interest rate
-			System.out.print("Enter interest rate: ");
-
-			if (!input.hasNextBigDecimal()) {
-				System.out.println("Error: Interest rate must be a number.");
-				return;
-			}
-
-			BigDecimal rate = input.nextBigDecimal();
-
-			// Asks the user to enter the time in years
-			System.out.print("Enter time in years: ");
-
-			if (!input.hasNextBigDecimal()) {
-				System.out.println("Error: Time must be a number.");
-				return;
-			}
-
-			BigDecimal time = input.nextBigDecimal();
+			// Gets the time in years from the user
+			System.out.print("Enter Time (years): ");
+			int time = scanner.nextInt();
 
 			try {
 
-				// Creates and stores an Interest object
-				interests[i] = new Interest(principal, rate, time);
+				// Creates an Interest object and stores it in the array
+				investments[i] = new Interest(principal, rate, time);
 
-				// Displays the calculated interest
+				// Displays the simple interest
 				System.out.println("Simple Interest: $"
-						+ interests[i].calculateSimpleInterest());
+						+ investments[i].calculateSimpleInterest());
 
+				// Displays the compound interest
 				System.out.println("Compound Interest: $"
-						+ interests[i].calculateCompoundInterest());
+						+ investments[i].calculateCompoundInterest());
 
 			}
-			catch (IllegalArgumentException e) {
+			catch (ArrayIndexOutOfBoundsException e) {
 
-				// Displays the error message from the Interest constructor
-				System.out.println("Error: " + e.getMessage());
+				// Displays information about an array index error
+				e.printStackTrace();
+				e.getCause();
+				e.getMessage();
+			}
+			catch (ArithmeticException e) {
+
+				// Displays information about a calculation error
+				e.printStackTrace();
+				e.getCause();
+				e.getMessage();
+			}
+			catch (IndexOutOfBoundsException e) {
+
+				// Displays information about an index error
+				e.printStackTrace();
+				e.getCause();
+				e.getMessage();
 			}
 		}
 
-		// Closes the Scanner
-		input.close();
+		// Closes the Scanner after all inputs are finished
+		scanner.close();
 	}
 }
